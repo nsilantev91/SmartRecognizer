@@ -287,7 +287,6 @@ namespace AForge.WindowsForms
 
             //  Создаём новую обучающую выборку
             SamplesSet samples = CreateSamplesSet();
-            var p = 1;
             try
             {
                 //  Обучение запускаем асинхронно, чтобы не блокировать форму
@@ -419,13 +418,13 @@ namespace AForge.WindowsForms
              {
                  throw ex;
              }*/
-            result = FileHelper.ReadFromBinaryFile<SamplesSet>(@"..\..\classes.data");
-            /*ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Play"), FigureType.Play);
+            //result = FileHelper.ReadFromBinaryFile<SamplesSet>(@"..\..\classes.data");
+            ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Play"), FigureType.Play);
             ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Stop"), FigureType.Stop);
             ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Pause"), FigureType.Pause);
             ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Forward"), FigureType.Forward);
             ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Backward"), FigureType.Backward);
-            FileHelper.WriteToBinaryFile(@"..\..\classes.data", result);*/
+            FileHelper.WriteToBinaryFile(@"..\..\classes.data", result);
             /*StreamWriter nnFile = File.CreateText(@"..\..\samples.txt");
             var s = Newtonsoft.Json.JsonConvert.SerializeObject(result);
             nnFile.WriteLine(s);
