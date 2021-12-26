@@ -9,8 +9,6 @@ using System.Drawing;
 namespace AForge.WindowsForms
 {
 
-
-
     /// <summary>
     /// Класс-диспетчер, управляющий всеми остальными и служащий для связи с формой
     /// </summary>

@@ -11,7 +11,7 @@ namespace AForge.WindowsForms
     /// Тип фигуры
     /// </summary>
     public enum FigureType : byte { Play = 0, Stop, Pause, Backward, Forward, Undef };
-    
+
     /*public class GenerateImage
     {
         /// <summary>

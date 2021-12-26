@@ -6,6 +6,8 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace AForge.WindowsForms
 {
@@ -14,30 +16,29 @@ namespace AForge.WindowsForms
         /// <summary>
         /// Массив входных матриц весов
         /// </summary>
-        private readonly double[][,] _weights;
-        
+        public double[][,] _weights;
+
         /// <summary>
         /// Входной взвешенный сигнал
         /// </summary>
-        private readonly double[][] _charges;
-        
+        public double[][] _charges;
+
         /// <summary>
         /// Значение ошибки
         /// </summary>
-        private readonly double[][] _errors;
+        public double[][] _errors;
         
         /// <summary>
         /// Скорость обучения
         /// </summary>
-        private const double Speed = 0.25;
+        public const double Speed = 0.25;
         
-        private readonly Stopwatch _stopWatch = new Stopwatch();
-
+       private readonly Stopwatch _stopWatch = new Stopwatch();
+        public StudentNetwork() { }
         public StudentNetwork(int[] structure, double lowerBound = -1, double upperBound = 1)
         {
             _charges = new double[structure.Length][];
             _errors = new double[structure.Length][];
-            
             for (int i = 0; i < structure.Length; i++)
             {
                 _errors[i] = new double[structure[i]];
@@ -192,7 +193,7 @@ namespace AForge.WindowsForms
             StreamWriter errorsFile = File.CreateText("errors.csv");
 #endif
 
-            _stopWatch.Restart();
+           _stopWatch.Restart();
 
             while (epochToRun++ < epochsCount && error > acceptableError)
             {

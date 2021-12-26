@@ -50,6 +50,8 @@
             this.borderTrackBar = new System.Windows.Forms.TrackBar();
             this.status = new System.Windows.Forms.Label();
             this.controlPanel = new System.Windows.Forms.Panel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.ProcessButton = new System.Windows.Forms.Button();
             this.resolutionsBox = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -330,6 +332,8 @@
             // controlPanel
             // 
             this.controlPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.controlPanel.Controls.Add(this.comboBox1);
+            this.controlPanel.Controls.Add(this.button1);
             this.controlPanel.Controls.Add(this.ProcessButton);
             this.controlPanel.Enabled = false;
             this.controlPanel.Location = new System.Drawing.Point(544, 652);
@@ -338,11 +342,41 @@
             this.controlPanel.Size = new System.Drawing.Size(499, 72);
             this.controlPanel.TabIndex = 33;
             // 
+            // comboBox1
+            // 
+            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Play",
+            "Stop",
+            "Pause",
+            "Backward",
+            "Forward",
+            "Undef"});
+            this.comboBox1.Location = new System.Drawing.Point(187, 26);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(131, 24);
+            this.comboBox1.TabIndex = 28;
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(326, 18);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(167, 37);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "Запомнить";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // ProcessButton
             // 
             this.ProcessButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ProcessButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ProcessButton.Location = new System.Drawing.Point(221, 16);
+            this.ProcessButton.Location = new System.Drawing.Point(9, 18);
             this.ProcessButton.Margin = new System.Windows.Forms.Padding(4);
             this.ProcessButton.Name = "ProcessButton";
             this.ProcessButton.Size = new System.Drawing.Size(167, 37);
@@ -429,7 +463,7 @@
             this.netStructureBox.Name = "netStructureBox";
             this.netStructureBox.Size = new System.Drawing.Size(159, 22);
             this.netStructureBox.TabIndex = 18;
-            this.netStructureBox.Text = "1000;600;30;5";
+            this.netStructureBox.Text = "400;500;20;5";
             // 
             // recreateNetButton
             // 
@@ -452,7 +486,7 @@
             0,
             0});
             this.classCounter.Minimum = new decimal(new int[] {
-            5,
+            1,
             0,
             0,
             0});
@@ -526,7 +560,7 @@
             this.EpochesCounter.Size = new System.Drawing.Size(160, 22);
             this.EpochesCounter.TabIndex = 8;
             this.EpochesCounter.Value = new decimal(new int[] {
-            20,
+            100,
             0,
             0,
             0});
@@ -702,6 +736,8 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -3,9 +3,12 @@ using System.IO;
 using System.Linq;
 using Accord.Neuro;
 using Accord.Neuro.Learning;
+using System.Data;
+using System;
 
 namespace AForge.WindowsForms
 {
+    [Serializable]
     class AccordNet : BaseNetwork
     {
         /// <summary>

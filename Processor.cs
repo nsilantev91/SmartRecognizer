@@ -158,7 +158,8 @@ namespace AForge.WindowsForms
             //            
             //        }
 
-
+            AForge.Imaging.Filters.ResizeBilinear fil = new AForge.Imaging.Filters.ResizeBilinear(200, 200);
+            uProcessed = fil.Apply(uProcessed);
             processed = uProcessed.ToManagedImage();
 
             return true;

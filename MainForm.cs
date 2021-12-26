@@ -12,6 +12,8 @@ using AForge.Video;
 using AForge.Video.DirectShow;
 using System.Diagnostics;
 using System.IO;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace AForge.WindowsForms
 {
@@ -291,7 +293,11 @@ namespace AForge.WindowsForms
                 //  Обучение запускаем асинхронно, чтобы не блокировать форму
                 var curNet = Net;
                 double f = await Task.Run(() => curNet.TrainOnDataSet(samples, epoches, acceptable_error, parallel));
-
+                StreamWriter nnFile = File.CreateText(@"..\..\NN.txt");
+                var s = Newtonsoft.Json.JsonConvert.SerializeObject(Net);
+                nnFile.WriteLine(s);
+                nnFile.Flush();
+                nnFile.Close();
                 label1.Text = "Покажите картинку";
                 label1.ForeColor = Color.Green;
                 groupBox1.Enabled = true;
@@ -303,6 +309,7 @@ namespace AForge.WindowsForms
             }
             catch (Exception e)
             {
+                throw e;
                 label1.Text = $"Исключение: {e.Message}";
             }
 
@@ -364,10 +371,10 @@ namespace AForge.WindowsForms
             //  Проверяем корректность задания структуры сети
             int[] structure = CurrentNetworkStructure();
             if (structure.Length < 2  ||
-                structure[structure.Length - 1] != 5 || structure[0] != 1000)
+                structure[structure.Length - 1] != 5 || structure[0] != 400)
             {
                 MessageBox.Show(
-                    $"В сети должно быть более двух слоёв, первый слой должен содержать 1000 нейронов, последний - 5",
+                    $"В сети должно быть более двух слоёв, первый слой должен содержать 400 нейронов, последний - 5",
                     "Ошибка", MessageBoxButtons.OK);
                 return;
             }
@@ -402,41 +409,64 @@ namespace AForge.WindowsForms
 
         public SamplesSet CreateSamplesSet()
         {
-            var result = new SamplesSet();
+            SamplesSet result = new SamplesSet();
+            /* try
+             {
+                 var s = System.IO.File.ReadAllText(@"../../samples.txt");
+                 result = JsonConvert.DeserializeObject<SamplesSet>(s);
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }*/
             result = FileHelper.ReadFromBinaryFile<SamplesSet>(@"..\..\classes.data");
-            /*ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\play"), FigureType.Play);
-            ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\stop"), FigureType.Stop);
-            ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\pause"), FigureType.Pause);
-            ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\forward"), FigureType.Forward);
-            ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\backward"), FigureType.Backward);
+            /*ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Play"), FigureType.Play);
+            ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Stop"), FigureType.Stop);
+            ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Pause"), FigureType.Pause);
+            ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Forward"), FigureType.Forward);
+            ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Backward"), FigureType.Backward);
             FileHelper.WriteToBinaryFile(@"..\..\classes.data", result);*/
+            /*StreamWriter nnFile = File.CreateText(@"..\..\samples.txt");
+            var s = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            nnFile.WriteLine(s);
+            nnFile.Flush();
+            nnFile.Close();*/
             return result;
         }
 
         private void ProcessClassSamples(SamplesSet samplesSet, string[] fileNames, FigureType type)
         {
-            foreach (var fileName in fileNames)
+            try
             {
-                var image = new Bitmap(fileName);
-                var inputs = new double[1000];
-                for (int i = 0; i < 500; i++)
+ 
+                foreach (var fileName in fileNames)
                 {
-                    inputs[i] = CountBlackPixels(GetBitmapColumn(image, i));
-                    inputs[i + 500] = CountBlackPixels(GetBitmapRow(image, i));
+                    var image = new Bitmap(fileName);
+                    var inputs = new double[400];
+                    for (int i = 0; i < 200; i++)
+                    {
+                        inputs[i] = CountBlackPixels(GetBitmapColumn(image, i));
+                        inputs[i + 200] = CountBlackPixels(GetBitmapRow(image, i));
+                        
+                    }
+                    samplesSet.AddSample(new Sample(inputs, 5, type));
+                   
                 }
-                samplesSet.AddSample(new Sample(inputs, 5, type));
-                Console.WriteLine($"Add sample {fileName}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 
         public Sample CreateSample(FigureType actualType = FigureType.Undef)
         {
-            var inputs = new double[1000];
+            var inputs = new double[400];
             var img = new Bitmap(processedImgBox.Image);
-            for (int i = 0; i < 500; i++)
+            for (int i = 0; i < 200; i++)
             {
                 inputs[i] = CountBlackPixels(GetBitmapColumn(img, i));
-                inputs[i + 500] = CountBlackPixels(GetBitmapRow(img, i));
+                inputs[i + 200] = CountBlackPixels(GetBitmapRow(img, i));
             }
 
             return new Sample(inputs, 5, actualType);
@@ -460,5 +490,32 @@ namespace AForge.WindowsForms
                 result[i] = picture.GetPixel(i, ind);
             return result;
         }
+
+        //TODO: обрезать
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (!Directory.Exists("..\\..\\Images"))
+                Directory.CreateDirectory("..\\..\\Images");
+            FigureType f = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                if (!Directory.Exists("..\\..\\Images\\" + f.ToString()))
+                    Directory.CreateDirectory("..\\..\\Images\\" + f.ToString());
+                f++;
+            }
+            FigureType current_letter = 0;
+            switch (comboBox1.Text)
+            {
+                case "Play": current_letter = 0; break;
+                case "Stop": current_letter = (FigureType)1; break;
+                case "Pause": current_letter = (FigureType)2; break;
+                case "Backward": current_letter = (FigureType)3; break;
+                case "Forward": current_letter = (FigureType)4; break;
+                case "Undef": current_letter = (FigureType)5; break;
+            }
+            var lst = Directory.GetFiles("..\\..\\Images\\" + current_letter.ToString());
+            processedImgBox.Image.Save("..\\..\\Images\\" + current_letter.ToString() + "\\processed_"+ current_letter.ToString().ToLower() + lst.Length + ".png", System.Drawing.Imaging.ImageFormat.Png);
+        }
     }
-}
+    }
+

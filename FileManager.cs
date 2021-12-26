@@ -5,9 +5,42 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.IO;
+using ProtoBuf;
 
 namespace AForge.WindowsForms
 {
+  
+    public class NN
+    {
+        /// <summary>
+        /// Массив входных матриц весов
+        /// </summary>
+        public double[][,] _weights;
+
+        /// <summary>
+        /// Входной взвешенный сигнал
+        /// </summary>
+        public double[][] _charges;
+
+        /// <summary>
+        /// Значение ошибки
+        /// </summary>
+        public double[][] _errors;
+
+        /// <summary>
+        /// Скорость обучения
+        /// </summary>
+        public double Speed;
+
+        public NN(double[][,] weights, double[][] charges, double[][] errors, double speed = 0.25)
+        {
+            _weights = weights;
+            _charges = charges;
+            _errors = errors;
+            Speed = speed;
+        }
+    }
+
     static class FileHelper
     {
 

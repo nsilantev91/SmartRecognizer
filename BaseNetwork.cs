@@ -6,6 +6,7 @@ namespace AForge.WindowsForms
     /// <summary>
     /// Базовый класс для реализации как самодельного персептрона, так и обёртки для ActivationNetwork из Accord.Net
     /// </summary>
+    [Serializable]
     public abstract class BaseNetwork
     {
         // Событие обновления прогресса обучения (форма подписывается для того чтобы знать о том, сколько процентов работы сделано, и обновлять прогрессбар)
