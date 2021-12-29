@@ -31,7 +31,7 @@ namespace AForge.WindowsForms
         /// <summary>
         /// Скорость обучения
         /// </summary>
-        public const double Speed = 0.25;
+        public const double Speed = 0.01;
         
        private readonly Stopwatch _stopWatch = new Stopwatch();
         public StudentNetwork() { }

@@ -232,6 +232,7 @@ namespace AForge.WindowsForms
 
                 return networksCache[selectedItem];
             }
+            set { }
         }
 
         private Dictionary<string, Func<int[], BaseNetwork>> networksFabric;
@@ -297,6 +298,8 @@ namespace AForge.WindowsForms
                 nnFile.WriteLine(s);
                 nnFile.Flush();
                 nnFile.Close();
+                /*var s = System.IO.File.ReadAllText(@"../../NN.txt");
+                Net = Newtonsoft.Json.JsonConvert.DeserializeObject<StudentNetwork>(s);*/
                 label1.Text = "Покажите картинку";
                 label1.ForeColor = Color.Green;
                 groupBox1.Enabled = true;
@@ -418,13 +421,13 @@ namespace AForge.WindowsForms
              {
                  throw ex;
              }*/
-            //result = FileHelper.ReadFromBinaryFile<SamplesSet>(@"..\..\classes.data");
-            ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Play"), FigureType.Play);
+            result = FileHelper.ReadFromBinaryFile<SamplesSet>(@"..\..\classes.data");
+           /* ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Play"), FigureType.Play);
             ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Stop"), FigureType.Stop);
             ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Pause"), FigureType.Pause);
             ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Forward"), FigureType.Forward);
-            ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Backward"), FigureType.Backward);
-            FileHelper.WriteToBinaryFile(@"..\..\classes.data", result);
+            ProcessClassSamples(result, Directory.GetFiles(@"..\..\Images\Backward"), FigureType.Backward);*/
+            //FileHelper.WriteToBinaryFile(@"..\..\classes.data", result);
             /*StreamWriter nnFile = File.CreateText(@"..\..\samples.txt");
             var s = Newtonsoft.Json.JsonConvert.SerializeObject(result);
             nnFile.WriteLine(s);

@@ -583,7 +583,7 @@
             this.TrainingSizeCounter.Size = new System.Drawing.Size(160, 22);
             this.TrainingSizeCounter.TabIndex = 6;
             this.TrainingSizeCounter.Value = new decimal(new int[] {
-            119,
+            521,
             0,
             0,
             0});
